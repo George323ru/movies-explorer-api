@@ -22,6 +22,8 @@ const limiter = require('./middlewares/rate-limiter')
 const { PORT = 3000 } = process.env
 const app = express()
 
+app.use(cors())
+
 app.use(helmet())
 app.disable('x-powered-by')
 

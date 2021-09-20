@@ -66,7 +66,7 @@ async function getCurrentUser(req, res, next) {
 }
 
 async function patchUser(req, res, next) {
-  const userId = req.user._id;
+  const userId = req.user._id
   const { name, email } = req.body
 
   let user

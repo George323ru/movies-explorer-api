@@ -51,7 +51,7 @@ async function deleteMovie(req, res, next) {
       next(new NotFoundError('Карточка с указанным _id не найдена'))
     }
 
-    res.send(movieData);
+    res.send(movieData)
   } catch (error) {
     next(error)
   }

@@ -1,8 +1,8 @@
 const router = require('express').Router()
 const { celebrate, Joi } = require('celebrate')
 const {
-  createMovie, getMovies, deleteMovie
-} = require('../controllers/movies.js')
+  createMovie, getMovies, deleteMovie,
+} = require('../controllers/movies')
 
 router.get('/', getMovies)
 

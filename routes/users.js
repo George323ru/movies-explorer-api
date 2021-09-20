@@ -3,7 +3,7 @@ const { celebrate, Joi } = require('celebrate')
 const {
   getCurrentUser,
   patchUser,
-} = require('../controllers/users.js')
+} = require('../controllers/users')
 
 router.get('/me', getCurrentUser)
 
