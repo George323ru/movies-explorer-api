@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const helmet = require('helmet')
 const cors = require('cors')
-const { celebrate, Joi, errors } = require('celebrate')
+const { celebrate, errors } = require('celebrate')
 const usersRoutes = require('./routes/users')
 const moviesRoutes = require('./routes/movies')
 const {
@@ -13,6 +13,8 @@ const {
 } = require('./controllers/users')
 const auth = require('./middlewares/auth')
 const NotFoundError = require('./errors/not-found-err')
+const signupJoi = require('./utils/utils')
+const signinJoi = require('./utils/utils')
 
 const { requestLogger, errorLogger } = require('./middlewares/logger')
 const limiter = require('./middlewares/rate-limiter')
@@ -43,23 +45,10 @@ app.get('/crash-test', () => {
 })
 
 app.post('/signup',
-  celebrate({
-    body: Joi.object().keys({
-      email: Joi.string().required().email(),
-      password: Joi.string().required(),
-      name: Joi.string().min(2).max(30),
-      about: Joi.string().min(2).max(30),
-      avatar: Joi.string().pattern(/^https?:\/\/(www\.)?[\da-zA-Z-]*\.[\da-zA-Z-]*[\w-._~:/?#[\]@!$&'()*+,;=]*#?/),
-    }),
-  }), createUser)
+  celebrate({ body: signupJoi }), createUser)
 
 app.post('/signin',
-  celebrate({
-    body: Joi.object().keys({
-      email: Joi.string().required().email(),
-      password: Joi.string().required(),
-    }),
-  }), login)
+  celebrate({ body: signinJoi }), login)
 
 app.use('/users', auth, usersRoutes)
 app.use('/movies', auth, moviesRoutes)
