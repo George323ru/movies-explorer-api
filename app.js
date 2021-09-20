@@ -15,7 +15,7 @@ const auth = require('./middlewares/auth')
 const NotFoundError = require('./errors/not-found-err')
 
 const { requestLogger, errorLogger } = require('./middlewares/logger')
-const { limiter } = require('./middlewares/rate-limiter')
+const limiter = require('./middlewares/rate-limiter')
 
 const { PORT = 3000 } = process.env
 const app = express()
