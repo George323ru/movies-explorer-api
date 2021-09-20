@@ -13,8 +13,7 @@ const {
 } = require('./controllers/users')
 const auth = require('./middlewares/auth')
 const NotFoundError = require('./errors/not-found-err')
-const signupJoi = require('./utils/utils')
-const signinJoi = require('./utils/utils')
+const { signupJoi, signinJoi } = require('./utils/utils')
 
 const { requestLogger, errorLogger } = require('./middlewares/logger')
 const limiter = require('./middlewares/rate-limiter')
@@ -46,11 +45,9 @@ app.get('/crash-test', () => {
   }, 0)
 })
 
-app.post('/signup',
-  celebrate({ body: signupJoi }), createUser)
+app.post('/signup', celebrate({ body: signupJoi }), createUser)
 
-app.post('/signin',
-  celebrate({ body: signinJoi }), login)
+app.post('/signin', celebrate({ body: signinJoi }), login)
 
 app.use('/users', auth, usersRoutes)
 app.use('/movies', auth, moviesRoutes)
@@ -64,7 +61,6 @@ app.use(errorLogger)
 app.use(errors())
 
 app.use((err, req, res, next) => {
-  // если у ошибки нет статуса, выставляем 500
   const { statusCode = 500, message } = err
 
   res
