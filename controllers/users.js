@@ -33,7 +33,7 @@ async function createUser(req, res, next) {
       if (error.name === 'ValidationError') {
         next(new NotFoundError('Переданы некорректные данные при создании пользователя'));
       } else if (error.name === 'MongoError' && error.code === 11000) {
-        next(new ConflictError('Произошла ошибка при создании пользователя'));
+        next(new ConflictError('Произошла ошибка при создании пользователя, указанный почтовый ящик занят'));
       } else {
         next(error);
       }
@@ -106,7 +106,7 @@ const login = (req, res, next) => {
       res.send({ token });
     })
     .catch(() => {
-      throw new AuthError('Ошибка входа');
+      throw new AuthError('Пароль или почтовый ящик введены неверно');
     })
     .catch(next);
 };
