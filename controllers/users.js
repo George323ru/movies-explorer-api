@@ -77,13 +77,13 @@ async function patchUser(req, res, next) {
       });
 
     if (!user) {
-      throw new NotFoundError('Пользователь по указанному _id не найден');
+      throw new ConflictError('Пользователь по указанному _id не найден');
     }
 
     res.send(user);
   } catch (error) {
     if (error.message === 'NotValidID') {
-      next(new NotFoundError('Пользователь по указанному _id не найден'));
+      next(new ConflictError('Пользователь по указанному _id не найден'));
     } else if (error.name === 'ValidationError') {
       next(new BadRequestError('Ошибка при изменении данных пользователя'));
     } else {
