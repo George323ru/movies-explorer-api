@@ -46,7 +46,6 @@ app.get('/crash-test', () => {
 });
 
 app.post('/signup', celebrate({ body: signupJoi }), createUser);
-
 app.post('/signin', celebrate({ body: signinJoi }), login);
 
 app.use('/users', auth, usersRoutes);

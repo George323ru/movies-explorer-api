@@ -15,4 +15,4 @@ router.patch('/me',
     }),
   }), patchUser);
 
-module.exports = { router };
+module.exports = router;

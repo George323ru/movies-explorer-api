@@ -23,4 +23,4 @@ router.delete('/:movieId',
     }),
   }), deleteMovie);
 
-module.exports = { router };
+module.exports = router;

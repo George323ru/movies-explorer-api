@@ -3,7 +3,7 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const AuthError = require('../errors/auth-err');
 
-const auth = (req, res, next) => {
+module.exports = (req, res, next) => {
   const { authorization } = req.headers;
   // убеждаемся, что он есть или начинается с Bearer
   if (!authorization || !authorization.startsWith('Bearer ')) {
@@ -22,5 +22,3 @@ const auth = (req, res, next) => {
 
   next();
 };
-
-module.exports = { auth };
