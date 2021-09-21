@@ -18,7 +18,7 @@ async function getMovies(req, res, next) {
 async function createMovie(req, res, next) {
   const {
     country, director, duration, year, description,
-    image, trailer, nameRU, nameEN, movieId, thumbnail,
+    image, trailer, movieId, nameRU, nameEN, thumbnail,
   } = req.body;
   const owner = req.user._id;
   console.log(owner);
