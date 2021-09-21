@@ -1,8 +1,6 @@
 {
   "extends": "airbnb-base",
   "rules": {
-    "linebreak-style": "off",
-    "no-console": "off",
     "no-underscore-dangle": [
       "error",
       {
@@ -12,32 +10,6 @@
           "_id"
         ]
       }
-    ],
-    "semi": [
-      "error",
-      "never",
-      {"beforeStatementContinuationChars": "always"}
-    ],
-    "eol-last": [
-      "error",
-      "never"
-    ],
-    "arrow-parens": [
-      "error",
-      "as-needed"
-    ],
-    "import/no-extraneous-dependencies": [
-      "error",
-      {
-        "devDependencies": true,
-        "optionalDependencies": false,
-        "peerDependencies": false,
-        "packageDir": "./"
-      }
-    ],
-    "func-names": [
-      "error",
-      "never"
     ]
   }
 }

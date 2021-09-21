@@ -1,121 +1,121 @@
-const { NODE_ENV, JWT_SECRET } = process.env
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const User = require('../models/user')
-const NotFoundError = require('../errors/not-found-err')
-const BadRequestError = require('../errors/bad-request-err')
-const ConflictError = require('../errors/conflict-err')
-const AuthError = require('../errors/auth-err')
+const { NODE_ENV, JWT_SECRET } = process.env;
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const User = require('../models/user');
+const NotFoundError = require('../errors/not-found-err');
+const BadRequestError = require('../errors/bad-request-err');
+const ConflictError = require('../errors/conflict-err');
+const AuthError = require('../errors/auth-err');
 
 async function createUser(req, res, next) {
   const {
     name,
     email,
     password,
-  } = req.body
+  } = req.body;
 
-  let hash
-  let user
+  let hash;
+  let user;
 
   try {
-    hash = await bcrypt.hash(password, 10)
+    hash = await bcrypt.hash(password, 10);
 
     try {
       user = await User.create({
         email, name, password: hash,
-      })
+      });
       res.status(201).send({
         name: user.name,
         email: user.email,
         _id: user._id,
-      })
+      });
     } catch (error) {
       if (error.name === 'ValidationError') {
-        next(new NotFoundError('Переданы некорректные данные при создании пользователя'))
+        next(new NotFoundError('Переданы некорректные данные при создании пользователя'));
       } else if (error.name === 'MongoError' && error.code === 11000) {
-        next(new ConflictError('Произошла ошибка при создании пользователя'))
+        next(new ConflictError('Произошла ошибка при создании пользователя'));
       } else {
-        next(error)
+        next(error);
       }
     }
   } catch (error) {
-    next(error)
+    next(error);
   }
 }
 
 async function getCurrentUser(req, res, next) {
-  const userId = req.user._id
-  let user
+  const userId = req.user._id;
+  let user;
 
   try {
-    user = await User.findById(userId)
+    user = await User.findById(userId);
 
     if (!user) {
-      throw new NotFoundError('Пользователь по указанному _id не найден')
+      throw new NotFoundError('Пользователь по указанному _id не найден');
     }
-    res.send(user)
+    res.send(user);
   } catch (error) {
     if (error.message === 'NotValidID') {
-      next(new NotFoundError('Пользователь по указанному _id не найден'))
+      next(new NotFoundError('Пользователь по указанному _id не найден'));
     } else if (error.name === 'CastError') {
-      next(new BadRequestError('Переданы некорректные данные при запросе _id'))
+      next(new BadRequestError('Переданы некорректные данные при запросе _id'));
     } else {
-      next(error)
+      next(error);
     }
   }
 }
 
 async function patchUser(req, res, next) {
-  const userId = req.user._id
-  const { name, email } = req.body
+  const userId = req.user._id;
+  const { name, email } = req.body;
 
-  let user
+  let user;
 
   try {
     user = await User.findByIdAndUpdate(userId,
       { name, email },
       {
         new: true, runValidators: true, upsert: false,
-      })
+      });
 
     if (!user) {
-      throw new NotFoundError('Пользователь по указанному _id не найден')
+      throw new NotFoundError('Пользователь по указанному _id не найден');
     }
 
-    res.send(user)
+    res.send(user);
   } catch (error) {
     if (error.message === 'NotValidID') {
-      next(new NotFoundError('Пользователь по указанному _id не найден'))
+      next(new NotFoundError('Пользователь по указанному _id не найден'));
     } else if (error.name === 'ValidationError') {
-      next(new BadRequestError('Ошибка при изменении данных пользователя'))
+      next(new BadRequestError('Ошибка при изменении данных пользователя'));
     } else {
-      next(error)
+      next(error);
     }
   }
 }
 
 const login = (req, res, next) => {
-  const { email, password } = req.body
+  const { email, password } = req.body;
 
   return User.findUserByCredentials(email, password)
-    .then(user => {
+    .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
         NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
         { expiresIn: '7d' },
-      )
+      );
 
-      res.send({ token })
+      res.send({ token });
     })
     .catch(() => {
-      throw new AuthError('Ошибка входа')
+      throw new AuthError('Ошибка входа');
     })
-    .catch(next)
-}
+    .catch(next);
+};
 
 module.exports = {
   createUser,
   getCurrentUser,
   patchUser,
   login,
-}
+};

@@ -1,11 +1,11 @@
-const router = require('express').Router()
-const { celebrate, Joi } = require('celebrate')
+const router = require('express').Router();
+const { celebrate, Joi } = require('celebrate');
 const {
   getCurrentUser,
   patchUser,
-} = require('../controllers/users')
+} = require('../controllers/users');
 
-router.get('/me', getCurrentUser)
+router.get('/me', getCurrentUser);
 
 router.patch('/me',
   celebrate({
@@ -13,6 +13,6 @@ router.patch('/me',
       name: Joi.string().required().min(2).max(30),
       about: Joi.string().required().min(2).max(30),
     }),
-  }), patchUser)
+  }), patchUser);
 
-module.exports = router
+module.exports = { router };

@@ -1,10 +1,10 @@
-const router = require('express').Router()
-const { celebrate, Joi } = require('celebrate')
+const router = require('express').Router();
+const { celebrate, Joi } = require('celebrate');
 const {
   createMovie, getMovies, deleteMovie,
-} = require('../controllers/movies')
+} = require('../controllers/movies');
 
-router.get('/', getMovies)
+router.get('/', getMovies);
 
 router.post('/',
   celebrate({
@@ -14,13 +14,13 @@ router.post('/',
         /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\\+~#=]+\.[a-zA-Z0-9()]+([-a-zA-Z0-9()@:%_\\+.~#?&/=#]*)/,
       ),
     }),
-  }), createMovie)
+  }), createMovie);
 
 router.delete('/:movieId',
   celebrate({
     params: Joi.object().keys({
       cardId: Joi.string().required().length(24).hex(),
     }),
-  }), deleteMovie)
+  }), deleteMovie);
 
-module.exports = router
+module.exports = { router };
