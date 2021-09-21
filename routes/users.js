@@ -1,4 +1,4 @@
-const router = require('express').Router();
+const usersRoutes = require('express').Router();
 const { celebrate } = require('celebrate');
 const {
   getCurrentUser,
@@ -6,11 +6,11 @@ const {
 } = require('../controllers/users');
 const { patchUserJoi } = require('../utils/utils');
 
-router.get('/me', getCurrentUser);
+usersRoutes.get('/me', getCurrentUser);
 
-router.patch('/me',
+usersRoutes.patch('/me',
   celebrate({
     body: patchUserJoi,
   }), patchUser);
 
-module.exports = router;
+module.exports = usersRoutes;
