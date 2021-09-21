@@ -9,10 +9,17 @@ router.get('/', getMovies);
 router.post('/',
   celebrate({
     body: Joi.object().keys({
-      name: Joi.string().required().min(2).max(30),
-      link: Joi.string().required().pattern(
-        /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\\+~#=]+\.[a-zA-Z0-9()]+([-a-zA-Z0-9()@:%_\\+.~#?&/=#]*)/,
-      ),
+      country: Joi.string().required().min(2).max(30),
+      director: Joi.string().required().min(2).max(30),
+      duration: Joi.number().required(),
+      year: Joi.string().required().min(4).max(4),
+      description: Joi.string().required().min(1),
+      image: Joi.string().required().pattern(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\\+~#=]+\.[a-zA-Z0-9()]+([-a-zA-Z0-9()@:%_\\+.~#?&/=#]*)/),
+      trailer: Joi.string().required().pattern(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\\+~#=]+\.[a-zA-Z0-9()]+([-a-zA-Z0-9()@:%_\\+.~#?&/=#]*)/),
+      movieId: Joi.number().required(),
+      nameRU: Joi.string().required().min(2),
+      nameEN: Joi.string().required().min(2),
+      thumbnail: Joi.string().required().pattern(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\\+~#=]+\.[a-zA-Z0-9()]+([-a-zA-Z0-9()@:%_\\+.~#?&/=#]*)/),
     }),
   }), createMovie);
 

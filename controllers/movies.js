@@ -16,17 +16,36 @@ async function getMovies(req, res, next) {
 }
 
 async function createMovie(req, res, next) {
+  const {
+    country, director, duration, year, description,
+    image, trailer, nameRU, nameEN, movieId, thumbnail,
+  } = req.body;
   const owner = req.user._id;
+  console.log(owner);
   let movie;
 
   try {
-    movie = await Movie.create({ owner, ...req.body });
-    res.status(200).send(movie);
+    movie = await Movie.create({
+      country,
+      director,
+      duration,
+      year,
+      description,
+      image,
+      trailer,
+      nameRU,
+      nameEN,
+      thumbnail,
+      movieId,
+      owner,
+    });
+    res.status(201).send(movie);
   } catch (error) {
     if (error.name === 'ValidationError') {
       next(new BadRequestError('Переданы некорректные данные при создании карточки'));
+    } else {
+      next(error);
     }
-    next(error);
   }
 }
 
