@@ -18,7 +18,7 @@ router.post('/signin', celebrate({ body: signinJoi }), login);
 router.use('/users', auth, usersRoutes);
 router.use('/movies', auth, moviesRoutes);
 
-router.use('*', () => {
+router.use('*', auth, () => {
   throw new NotFoundError('Запрашиваемый ресурс не найден');
 });
 
