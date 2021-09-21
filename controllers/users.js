@@ -57,8 +57,6 @@ async function getCurrentUser(req, res, next) {
   } catch (error) {
     if (error.message === 'NotValidID') {
       next(new NotFoundError('Пользователь по указанному _id не найден'));
-    } else if (error.name === 'CastError') {
-      next(new BadRequestError('Переданы некорректные данные при запросе _id'));
     } else {
       next(error);
     }

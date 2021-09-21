@@ -19,7 +19,6 @@ app.disable('x-powered-by');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(limiter);
 
 mongoose.connect('mongodb://localhost:27017/moviesdb', {
   useNewUrlParser: true,
@@ -29,6 +28,7 @@ mongoose.connect('mongodb://localhost:27017/moviesdb', {
 });
 
 app.use(requestLogger);
+app.use(limiter);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
