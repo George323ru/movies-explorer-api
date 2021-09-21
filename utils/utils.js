@@ -31,7 +31,7 @@ const createMovieJoi = Joi.object().keys({
 });
 
 const deleteMovieJoi = Joi.object().keys({
-  cardId: Joi.string().required().length(24).hex(),
+  movieId: Joi.string().required().length(24).hex(),
 });
 
 module.exports = {

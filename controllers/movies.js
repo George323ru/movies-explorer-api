@@ -21,7 +21,6 @@ async function createMovie(req, res, next) {
     image, trailer, movieId, nameRU, nameEN, thumbnail,
   } = req.body;
   const owner = req.user._id;
-  console.log(owner);
   let movie;
 
   try {
@@ -52,6 +51,7 @@ async function createMovie(req, res, next) {
 async function deleteMovie(req, res, next) {
   const { movieId } = req.params;
   const currentUserId = req.user._id;
+  console.log(currentUserId);
   let movie;
   let movieData;
 
