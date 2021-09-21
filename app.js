@@ -4,19 +4,10 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const cors = require('cors');
-const { celebrate, errors } = require('celebrate');
-const usersRoutes = require('./routes/users');
-const moviesRoutes = require('./routes/movies');
-const {
-  createUser,
-  login,
-} = require('./controllers/users');
-const auth = require('./middlewares/auth');
-const NotFoundError = require('./errors/not-found-err');
-const { signupJoi, signinJoi } = require('./utils/utils');
-
+const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const limiter = require('./middlewares/rate-limiter');
+const routes = require('./routes');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -45,15 +36,7 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-app.post('/signup', celebrate({ body: signupJoi }), createUser);
-app.post('/signin', celebrate({ body: signinJoi }), login);
-
-app.use('/users', auth, usersRoutes);
-app.use('/movies', auth, moviesRoutes);
-
-app.use('*', () => {
-  throw new NotFoundError('Запрашиваемый ресурс не найден');
-});
+app.use(routes);
 
 app.use(errorLogger);
 
