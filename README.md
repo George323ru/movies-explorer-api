@@ -4,7 +4,7 @@
 
 ## Описание
 
-Бэкенда-часть сайта для поиска фильмов, написанна с использованием фреймворка express.js и системы MongoDB. Код для фронтенд-части [здесь](https://github.com/George323ru/movies-explorer-frontend).  
+Бэкенда-часть сайта для поиска фильмов, написана с использованием фреймворка express.js и системы MongoDB. Код для фронтенд-части [здесь](https://github.com/George323ru/movies-explorer-frontend).  
 
 ## Технологии  
 
